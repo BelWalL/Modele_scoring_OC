@@ -86,6 +86,8 @@ def get_features_selected():
     # Retourner la liste des features après suppression
     return features_selected_list
 
+# Obtention de la liste des features sélectionnées
+features_selected = get_features_selected()
 def get_customer_shap_values(data_df):
     # Assurez-vous que data_df contient uniquement les features nécessaires pour la prédiction
     features_selected = data_df.columns.tolist()
@@ -121,24 +123,23 @@ def get_predicted_score(customer_id):
         # En cas d'erreur, retourner un message d'erreur
         return {"error": f"Une erreur est survenue lors de la récupération du score prédit. Code d'erreur : {response.status_code}"}
 
+
 def request_prediction(api_url_calc, data, max_retries=3):
     headers = {"Content-Type": "application/json"}
     data_dict = data.to_dict(orient='records')[0]
     data_json = {'data': data_dict}
     for attempt in range(max_retries):
         try:
-            response = requests.post(url=api_url_calc, headers=headers, json=data_json, timeout=60)
-            response.raise_for_status()  # Cela vérifie les réponses HTTP qui indiqueraient une erreur
+            response = requests.request(
+                method='POST', headers=headers, url=api_url_calc, json=data_json, timeout=60)
+            response.raise_for_status()
             return response.json()
         except requests.exceptions.ReadTimeout:
-            print(f"Request timed out. Retrying... (Attempt {attempt + 1} of {max_retries})")
-            time.sleep(2)  # Ajoutez un petit délai avant de réessayer
-        except requests.exceptions.RequestException as e:
-            print(f"An error occurred: {e}")
-            break  # Sortir de la boucle après une erreur autre que ReadTimeout
-
-    # Si on atteint ce point, toutes les tentatives ont échoué
+            print(f"Request timed out. Retrying... (Attempt {attempt + 1}/{max_retries})")
+            time.sleep(2)  # Add a small delay before retrying
     raise Exception("Maximum retries reached. Unable to get a response.")
+
+    return response.json()
 
 
 def construire_jauge_score(score_remboursement_client):
@@ -215,3 +216,36 @@ if customer_id:
 else:
     # Message d'encouragement à sélectionner un client dans la sidebar si ce n'est pas encore fait
     st.sidebar.warning("Veuillez sélectionner un client pour afficher les détails.")
+# Titre principal de la page
+st.title("Dashboard d'évaluation de crédit")
+
+# Bouton et prédiction de risque de crédit en utilisant l'endpoint GET
+if customer_id:
+    risk_url = f"{api_url}/api/v1/customers/{customer_id}/pred_score"
+    response = requests.get(risk_url)
+
+    if response.status_code == 200:
+        risk_content = response.json()
+        proba_risk_str = risk_content["Proba_risk"]
+        proba_risk_value = float(proba_risk_str.split(":")[1].strip().replace("%",""))
+
+        if proba_risk_value > 40:
+            st.markdown("<p style='font-family: San Francisco, sans-serif; font-size:24px; color:red;'>Crédit refusé</p>", unsafe_allow_html=True)
+        else:
+            st.markdown("<p style='font-family: San Francisco, sans-serif; font-size:24px; color:green;'>Crédit accordé</p>", unsafe_allow_html=True)
+
+        st.write(f'Le risque de défaut pour ce client est de {proba_risk_value:.2f}%.')
+        st.write('Le seuil de décision est de 40%.')
+        jauge_score = construire_jauge_score(proba_risk_value / 100) # Ajustez cette fonction si nécessaire
+        st.pyplot(jauge_score)
+    else:
+        st.error("Impossible de récupérer la probabilité de risque de crédit pour ce client.")
+
+
+
+
+
+
+
+
+
