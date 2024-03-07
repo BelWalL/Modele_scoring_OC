@@ -1,0 +1,13 @@
+2024-03-07 17:04:14,072 [11700] DEBUG    root:75: [JupyterRequire] Loading Jupyter Require extension.
+2024-03-07 17:04:14,072 [11700] DEBUG    root:93: [JupyterRequire] Initializing comms.
+2024-03-07 17:04:14,072 [11700] INFO     root:247: [JupyterRequire] Initializing comms.
+2024-03-07 17:04:14,072 [11700] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
+2024-03-07 17:04:14,072 [11700] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
+2024-03-07 17:04:14,072 [11700] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2024-03-07 17:04:17,496 [11700] DEBUG    root:75: [JupyterRequire] Loading Jupyter Require extension.
+2024-03-07 17:04:17,496 [11700] DEBUG    root:93: [JupyterRequire] Initializing comms.
+2024-03-07 17:04:17,497 [11700] INFO     root:247: [JupyterRequire] Initializing comms.
+2024-03-07 17:04:17,501 [11700] DEBUG    root:195: [JupyterRequire] Configuration requested: {'paths': {}, 'shim': None}
+2024-03-07 17:04:17,501 [11700] INFO     root:271: [JupyterRequire] Comms have been successfully initialized.
+2024-03-07 17:04:17,503 [11700] DEBUG    root:97: [JupyterRequire] Registering comm targets.
+2024-03-07 17:04:21,145 [11700] INFO     numexpr.utils:160: [JupyterRequire] NumExpr defaulting to 8 threads.
