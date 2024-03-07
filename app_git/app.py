@@ -241,11 +241,51 @@ if customer_id:
     else:
         st.error("Impossible de récupérer la probabilité de risque de crédit pour ce client.")
 
+# import de targuet
+file_url_targuet = 'https://raw.githubusercontent.com/BelWalL/Projet7OC/main/api_git/df_prod_imp_with_predictions.csv'
+predictions_df  = pd.read_csv(file_url_targuet)
+
+# Fusionner les prédictions avec le dataset principal sur SK_ID_CURR
+app_test_with_predictions = pd.merge(app_test, predictions_df, on='SK_ID_CURR', how='left')
 
 
+def build_histogram(df, feature_selected_1, predicted_target):
+    fig, ax = plt.subplots()
+    # Filtrer les données basées sur la prédiction cible
+    df_target = df[df['Predicted_Class'] == predicted_target]
+    # Supposons que vous ayez une manière de récupérer la valeur actuelle de la feature pour le client actuel
+    customer_app_value = customer_data.get(feature_selected_1)
+
+    # Vérification pour éviter les valeurs <= 0 avec l'échelle log
+    df_target = df_target[df_target[feature_selected_1] > 0]
+
+    ax.hist(df_target[feature_selected_1], bins='auto', color='#0504aa', alpha=0.7, rwidth=0.85)
+
+    # Appliquer une échelle logarithmique pour l'axe X
+    ax.set_xscale('log')
+
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
+    ax.set_xlabel(feature_selected_1)
+    ax.set_ylabel('Fréquence')
+    title = 'Crédit accordé' if predicted_target == 0 else 'Crédit refusé'
+    ax.set_title(f'Distribution de la variable {feature_selected_1} pour les clients ayant un {title}')
+
+    if customer_app_value is not None and customer_app_value > 0:  # Assurez-vous également ici que la valeur n'est pas <= 0
+        ax.axvline(x=customer_app_value, color='red', linestyle='--', linewidth=2, label='Position du client')
+    ax.legend()
+
+    return fig
 
 
+feature_selected_1 = st.selectbox(
+    'Sélectionner une variable pour visualiser sa distribution selon le score du crédit',
+    features_selected
+)
 
+predicted_target = st.radio("Sélectionnez le type de clients pour la visualisation", (0, 1))
+
+histogram_fig = build_histogram(app_test_with_predictions, feature_selected_1, predicted_target)
+st.pyplot(histogram_fig)
 
 
 
