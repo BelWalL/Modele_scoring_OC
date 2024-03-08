@@ -186,7 +186,7 @@ if customer_id:
 
     if 'error' not in customer_data:
         # Préparation des données pour l'affichage
-        age_years = round(abs(customer_data['DAYS_BIRTH']) // 365, 0)  # Convertir en années, déjà en entier
+        age_years = customer_data['DAYS_BIRTH']
         gender = "Masculin" if customer_data.get('CODE_GENDER_M', 0) == 1 else "Féminin"
 
         # Rond des scores à deux décimales
