@@ -44,7 +44,7 @@ app_test = pd.read_csv(file_url)
 #print(app_test["DAYS_BIRTH"].describe())
 
 # api url
-api_url = "https://fastapiprojet7-e4b0e468a1de.herokuapp.com/"
+api_url = "https://fastapiprojet7-e4b0e468a1de.herokuapp.com"
 
 
 def get_customers_ids():
@@ -186,7 +186,7 @@ if customer_id:
 
     if 'error' not in customer_data:
         # Préparation des données pour l'affichage
-        age_years = customer_data['DAYS_BIRTH']
+        age_years = round(customer_data['DAYS_BIRTH'],0)
         gender = "Masculin" if customer_data.get('CODE_GENDER_M', 0) == 1 else "Féminin"
 
         # Rond des scores à deux décimales
@@ -241,51 +241,47 @@ if customer_id:
     else:
         st.error("Impossible de récupérer la probabilité de risque de crédit pour ce client.")
 
-# import de targuet
-file_url_targuet = 'https://raw.githubusercontent.com/BelWalL/Projet_7_OC/main/api_git/df_prod_imp_with_predictions.csv'
-predictions_df  = pd.read_csv(file_url_targuet)
-
-# Fusionner les prédictions avec le dataset principal sur SK_ID_CURR
-app_test_with_predictions = pd.merge(app_test, predictions_df, on='SK_ID_CURR', how='left')
-
-
-def build_histogram(df, feature_selected_1, predicted_target):
-    fig, ax = plt.subplots()
-    # Filtrer les données basées sur la prédiction cible
-    df_target = df[df['Predicted_Class'] == predicted_target]
-    # Supposons que vous ayez une manière de récupérer la valeur actuelle de la feature pour le client actuel
-    customer_app_value = customer_data.get(feature_selected_1)
-
-    # Vérification pour éviter les valeurs <= 0 avec l'échelle log
-    df_target = df_target[df_target[feature_selected_1] > 0]
-
-    ax.hist(df_target[feature_selected_1], bins='auto', color='#0504aa', alpha=0.7, rwidth=0.85)
-
-    # Appliquer une échelle logarithmique pour l'axe X
-    ax.set_xscale('log')
-
-    ax.grid(axis='y', linestyle='--', alpha=0.7)
-    ax.set_xlabel(feature_selected_1)
-    ax.set_ylabel('Fréquence')
-    title = 'Crédit accordé' if predicted_target == 0 else 'Crédit refusé'
-    ax.set_title(f'Distribution de la variable {feature_selected_1} pour les clients ayant un {title}')
-
-    if customer_app_value is not None and customer_app_value > 0:  # Assurez-vous également ici que la valeur n'est pas <= 0
-        ax.axvline(x=customer_app_value, color='red', linestyle='--', linewidth=2, label='Position du client')
-    ax.legend()
-
-    return fig
-
-
-feature_selected_1 = st.selectbox(
-    'Sélectionner une variable pour visualiser sa distribution selon le score du crédit',
-    features_selected
+# Ajouter une liste déroulante pour sélectionner la caractéristique
+selected_feature = st.selectbox(
+    "Sélectionnez une caractéristique pour voir la distribution:",
+    features_selected  # Cette liste doit contenir les noms des caractéristiques disponibles
 )
 
-predicted_target = st.radio("Sélectionnez le type de clients pour la visualisation", (0, 1))
 
-histogram_fig = build_histogram(app_test_with_predictions, feature_selected_1, predicted_target)
-st.pyplot(histogram_fig)
+def plot_feature_distribution(df, feature, customer_feature_value=None):
+    # Création de la figure
+    plt.figure(figsize=(10, 6))
+
+    # Tracé de l'histogramme de la caractéristique pour tout le DataFrame
+    plt.hist(df[feature], bins=30, alpha=0.7, label="Distribution", color="blue")
+
+    # Si une valeur est fournie, marquer la position de cette valeur sur l'histogramme
+    if customer_feature_value is not None:
+        plt.axvline(customer_feature_value, color='red', linestyle='--', label="Valeur Client")
+
+    plt.title(f'Distribution de {feature}')
+    plt.xlabel(feature)
+    plt.ylabel('Nombre d\'observations')
+    plt.legend()
+    plt.grid(True)
+
+    # Affichage du graphe
+    plt.show()
+
+
+# Après que l'utilisateur ait sélectionné une caractéristique
+if customer_id and selected_feature:
+    # Récupérer la valeur de la caractéristique pour le client sélectionné
+    customer_feature_value = get_customer_values(customer_id).get(selected_feature, None)
+
+    # Dessiner l'histogramme de la caractéristique sélectionnée pour tout le DataFrame
+    # et marquer la position du client sélectionné
+    plot_feature_distribution(app_test, selected_feature, customer_feature_value)
+
+    # Utiliser st.pyplot() pour afficher le graphe dans Streamlit
+    st.pyplot(plt)
+
+
 
 
 

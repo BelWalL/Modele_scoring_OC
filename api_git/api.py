@@ -18,49 +18,50 @@ class CustomerData(BaseModel):
     EXT_SOURCE_2: float
     EXT_SOURCE_3: float
     DAYS_BIRTH: float
-    INSTAL_AMT_PAYMENT_MIN: float
-    AMT_ANNUITY: float
-    ANNUITY_INCOME_PERC: float
     DAYS_EMPLOYED: float
-    DAYS_EMPLOYED_PERC: float
+    AMT_ANNUITY: float
+    INSTAL_AMT_PAYMENT_MIN: float
+    AMT_CREDIT: float
     PREV_CNT_PAYMENT_MEAN: float
+    INSTAL_DAYS_ENTRY_PAYMENT_MAX: float
+    AMT_GOODS_PRICE: float
     CODE_GENDER_M: float
     APPROVED_CNT_PAYMENT_MEAN: float
-    INSTAL_DAYS_ENTRY_PAYMENT_MEAN: float
+    ANNUITY_INCOME_PERC: float
     INSTAL_DPD_MEAN: float
-    AMT_CREDIT: float
-    AMT_GOODS_PRICE: float
     DAYS_ID_PUBLISH: float
+    INSTAL_PAYMENT_DIFF_MEAN: float
+    INSTAL_AMT_PAYMENT_SUM: float
+    INSTAL_DAYS_ENTRY_PAYMENT_MEAN: float
     POS_MONTHS_BALANCE_SIZE: float
-    ACTIVE_DAYS_CREDIT_MAX: float
-    ACTIVE_DAYS_CREDIT_ENDDATE_MAX: float
 
 # Modèle Pydantic pour valider les données reçues par l'API pour la prédiction
 class PredictionRequest(BaseModel):
+    SK_ID_CURR: int
     PAYMENT_RATE: float
     EXT_SOURCE_2: float
     EXT_SOURCE_3: float
     DAYS_BIRTH: float
-    INSTAL_AMT_PAYMENT_MIN: float
-    AMT_ANNUITY: float
-    ANNUITY_INCOME_PERC: float
     DAYS_EMPLOYED: float
-    DAYS_EMPLOYED_PERC: float
+    AMT_ANNUITY: float
+    INSTAL_AMT_PAYMENT_MIN: float
+    AMT_CREDIT: float
     PREV_CNT_PAYMENT_MEAN: float
+    INSTAL_DAYS_ENTRY_PAYMENT_MAX: float
+    AMT_GOODS_PRICE: float
     CODE_GENDER_M: float
     APPROVED_CNT_PAYMENT_MEAN: float
-    INSTAL_DAYS_ENTRY_PAYMENT_MEAN: float
+    ANNUITY_INCOME_PERC: float
     INSTAL_DPD_MEAN: float
-    AMT_CREDIT: float
-    AMT_GOODS_PRICE: float
     DAYS_ID_PUBLISH: float
+    INSTAL_PAYMENT_DIFF_MEAN: float
+    INSTAL_AMT_PAYMENT_SUM: float
+    INSTAL_DAYS_ENTRY_PAYMENT_MEAN: float
     POS_MONTHS_BALANCE_SIZE: float
-    ACTIVE_DAYS_CREDIT_MAX: float
-    ACTIVE_DAYS_CREDIT_ENDDATE_MAX: float
 
 # Charger le dataframe de test
 app_test = pd.read_csv('df_prod_imp.csv')
-
+print(app_test.columns)
 
 
 # Route racine pour afficher un message de bienvenue et des instructions
