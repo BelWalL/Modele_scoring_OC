@@ -1,0 +1,27 @@
+name: Streamlit Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8' # Ou la version de Python que vous utilisez
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # Ajoutez ici d'autres commandes pip install si nécessaire
+
+    - name: Run tests
+      run: |
+        # Commande pour exécuter les tests :
+        pytest test_app.py
+
