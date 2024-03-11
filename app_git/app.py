@@ -10,6 +10,8 @@ import time
 from io import BytesIO
 import streamlit as st
 
+# Code pour afficher le logo dans la sidebar
+st.sidebar.image('app_git/openclassroom.png', use_column_width=True)
 
 # URL "Raw" de votre classificateur LGBM sur GitHub
 url_classifier = 'https://raw.githubusercontent.com/BelWalL/Modele_scoring_OC/main/api_git/lgbm_classifier.pkl'
