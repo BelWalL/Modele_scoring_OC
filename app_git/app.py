@@ -302,12 +302,9 @@ if show_image:
 # Créer une case à cocher pour décider d'afficher ou non le rapport DataDrift
 show_datadrift_report = st.checkbox("Afficher le rapport DataDrift")
 
-# Si la case est cochée, afficher le rapport HTML via une URL
 if show_datadrift_report:
-    # L'URL où votre rapport HTML est accessible
-    url_rapport_html = "app_git/rapport_data_drift.html"
-    # Utiliser st.iframe pour intégrer le rapport dans votre application Streamlit
-    st.iframe(url_rapport_html, width=700, height=600)
+    # Créer un lien de téléchargement pour le fichier HTML
+    st.markdown('Cliquez [ici](app_git/rapport_data_drift.html) pour télécharger le rapport DataDrift.')
 
 
 
