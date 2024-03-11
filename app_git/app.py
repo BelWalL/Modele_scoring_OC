@@ -9,6 +9,7 @@ import pandas as pd
 import time
 from io import BytesIO
 import streamlit as st
+from streamlit.components.v1 import html
 
 # Code pour afficher le logo dans la sidebar
 st.sidebar.image('app_git/openclassroom.png', use_column_width=True)
@@ -298,7 +299,14 @@ show_image = st.checkbox("Afficher l'importance globale des variables")
 if show_image:
     st.image(feature_importance, caption="Importance globale des variables", use_column_width=True)
 
+# Créer une case à cocher pour décider d'afficher ou non le rapport DataDrift
+show_datadrift_report = st.checkbox("Afficher le rapport DataDrift")
 
+# Si la case est cochée, afficher le rapport HTML
+if show_datadrift_report:
+    # Assurez-vous de remplacer ce contenu HTML par le contenu réel de votre rapport
+    html_content = "<html><body><h1>rapport_data_drift</h1></body></html>"
+    html(html_content, height=600)
 
 
 
