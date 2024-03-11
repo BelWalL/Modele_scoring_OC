@@ -303,8 +303,18 @@ if show_image:
 show_datadrift_report = st.checkbox("Afficher le rapport DataDrift")
 
 if show_datadrift_report:
-    # Créer un lien de téléchargement pour le fichier HTML
-    st.markdown('Cliquez [ici](app_git/rapport_data_drift.html) pour télécharger le rapport DataDrift.')
+    # Lire le contenu du fichier HTML
+    with open('app_git/rapport_data_drift.html', 'r', encoding='utf-8') as file:
+        html_content = file.read()
+
+    # Créer un bouton de téléchargement pour le contenu HTML
+    st.download_button(
+        label="Télécharger le rapport DataDrift",
+        data=html_content,
+        file_name="rapport_data_drift.html",
+        mime="text/html"
+    )
+
 
 
 
