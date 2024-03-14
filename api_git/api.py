@@ -37,7 +37,6 @@ class CustomerData(BaseModel):
 
 # Modèle Pydantic pour valider les données reçues par l'API pour la prédiction
 class PredictionRequest(BaseModel):
-    SK_ID_CURR: int
     PAYMENT_RATE: float
     EXT_SOURCE_2: float
     EXT_SOURCE_3: float
