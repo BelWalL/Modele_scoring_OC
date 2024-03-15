@@ -289,6 +289,31 @@ if customer_id and selected_feature:
         # Utiliser st.pyplot() pour afficher le graphe dans Streamlit
         st.pyplot(plt)
 
+# Charger l'image de feature importance globale
+feature_importance = Image.open('app_git/feature_importance_globale.png')
+
+# Créer une case à cocher
+show_image = st.checkbox("Afficher l'importance globale des variables")
+
+# Afficher l'image uniquement si la case à cocher est cochée
+if show_image:
+    st.image(feature_importance, caption="Importance globale des variables", use_column_width=True)
+
+# Créer une case à cocher pour décider d'afficher ou non le rapport DataDrift
+show_datadrift_report = st.checkbox("Afficher le rapport DataDrift")
+
+if show_datadrift_report:
+    # Lire le contenu du fichier HTML
+    with open('app_git/rapport_data_drift.html', 'r', encoding='utf-8') as file:
+        html_content = file.read()
+
+    # Créer un bouton de téléchargement pour le contenu HTML
+    st.download_button(
+        label="Télécharger le rapport DataDrift",
+        data=html_content,
+        file_name="rapport_data_drift.html",
+        mime="text/html"
+    )
 
 # Définir le dictionnaire des variables et leurs descriptions
 variables_descriptions = {
@@ -316,38 +341,10 @@ variables_descriptions = {
 
 # Créer un DataFrame à partir du dictionnaire
 df_variables = pd.DataFrame(list(variables_descriptions.items()), columns=['Nom de Variable', 'Description'])
+#print (df_variables)
 
 # Afficher le DataFrame dans Streamlit
 st.dataframe(df_variables)
-
-
-# Charger l'image de feature importance globale
-feature_importance = Image.open('app_git/feature_importance_globale.png')
-
-# Créer une case à cocher
-show_image = st.checkbox("Afficher l'importance globale des variables")
-
-# Afficher l'image uniquement si la case à cocher est cochée
-if show_image:
-    st.image(feature_importance, caption="Importance globale des variables", use_column_width=True)
-
-# Créer une case à cocher pour décider d'afficher ou non le rapport DataDrift
-show_datadrift_report = st.checkbox("Afficher le rapport DataDrift")
-
-if show_datadrift_report:
-    # Lire le contenu du fichier HTML
-    with open('app_git/rapport_data_drift.html', 'r', encoding='utf-8') as file:
-        html_content = file.read()
-
-    # Créer un bouton de téléchargement pour le contenu HTML
-    st.download_button(
-        label="Télécharger le rapport DataDrift",
-        data=html_content,
-        file_name="rapport_data_drift.html",
-        mime="text/html"
-    )
-
-
 
 
 
