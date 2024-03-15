@@ -317,23 +317,23 @@ if show_datadrift_report:
 
 # Définir le dictionnaire des variables et leurs descriptions
 variables_descriptions = {
-    "PAYMENT_RATE": "Ratio du paiement annuel sur le montant du prêt",
+    "PAYMENT_RATE": "",
     "EXT_SOURCE_2": "Score normalisé de crédit provenant d'une source externe 2",
     "EXT_SOURCE_3": "Score normalisé de crédit provenant d'une source externe 3",
-    "DAYS_BIRTH": "Âge du client en jours au moment de la demande",
+    "DAYS_BIRTH": "",
     "DAYS_EMPLOYED": "Nombre de jours depuis le début de l'emploi actuel jusqu'à la demande de prêt",
     "AMT_ANNUITY": "Montant périodique à payer pour rembourser le prêt",
     "INSTAL_AMT_PAYMENT_MIN": "Montant minimum payé sur un précédent crédit pour une tranche spécifique",
     "AMT_CREDIT": "Montant du crédit demandé",
     "PREV_CNT_PAYMENT_MEAN": "Durée moyenne (en termes de paiements) des crédits précédents au moment de leur demande",
-    "INSTAL_DAYS_ENTRY_PAYMENT_MAX": "Moyenne des jours de paiement réel des tranches pour les crédits précédents",
+    "INSTAL_DAYS_ENTRY_PAYMENT_MAX": "Max des jours de paiement réel des tranches pour les crédits précédents",
     "AMT_GOODS_PRICE": "Prix des biens achetés avec le crédit pour les prêts à la consommation",
     "CODE_GENDER_M": "Indicateur si le client est de sexe masculin",
     "APPROVED_CNT_PAYMENT_MEAN": "Durée moyenne des crédits précédemment approuvés",
     "ANNUITY_INCOME_PERC": "Ratio de l'annuité du prêt par rapport au revenu total du client",
     "INSTAL_DPD_MEAN": "Moyenne des jours de retard pour le paiement des tranches des crédits précédents",
     "DAYS_ID_PUBLISH": "Nombre de jours depuis le dernier changement de document d'identité",
-    "INSTAL_PAYMENT_DIFF_MEAN": "float",
+    "INSTAL_PAYMENT_DIFF_MEAN": "Moyenne de l'écart entre le montant payé et le montant initialement prévu",
     "INSTAL_AMT_PAYMENT_SUM": "Somme de montant payé sur un précédent crédit pour une tranche spécifique",
     "INSTAL_DAYS_ENTRY_PAYMENT_MEAN": "Moyenne des jours de paiement réel des tranches pour les crédits précédents",
     "POS_MONTHS_BALANCE_SIZE": "Taille du Solde Mensuel"
