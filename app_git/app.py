@@ -317,10 +317,10 @@ if show_datadrift_report:
 
 # Définir le dictionnaire des variables et leurs descriptions
 variables_descriptions = {
-    "PAYMENT_RATE": "",
+    "PAYMENT_RATE": "Ration de paiement",
     "EXT_SOURCE_2": "Score normalisé de crédit provenant d'une source externe 2",
     "EXT_SOURCE_3": "Score normalisé de crédit provenant d'une source externe 3",
-    "DAYS_BIRTH": "",
+    "DAYS_BIRTH": "l'age du client",
     "DAYS_EMPLOYED": "Nombre de jours depuis le début de l'emploi actuel jusqu'à la demande de prêt",
     "AMT_ANNUITY": "Montant périodique à payer pour rembourser le prêt",
     "INSTAL_AMT_PAYMENT_MIN": "Montant minimum payé sur un précédent crédit pour une tranche spécifique",
